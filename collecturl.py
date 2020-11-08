@@ -3,7 +3,9 @@ from bs4 import BeautifulSoup
 import re
 import csv
 import time
-
+import argparse
+import config.actionmode
+from lib.utils import requesthtml
 
 def main():
   base_url = "https://db.netkeiba.com/?pid=race_top"
@@ -14,13 +16,8 @@ def main():
 
   # nヶ月分のレースカレンダーを走査
   while i < 3:
-    # TODO: 共通化すること
-    time.sleep(1)
+    soup = requesthtml.request(req_url)
 
-    res = requests.get(req_url)
-    soup = BeautifulSoup(res.content, 'html.parser')
-
-    # urllist = soup.select("div.race_calendar a[href^='/race/list/']")
     urllist = soup.find('div', class_='race_calendar').find_all('a', href=re.compile("/race/list/\\d+/"))
 
     # 開催日分のURLを取得しておく
@@ -38,10 +35,7 @@ def main():
   race_urls = []
 
   for url in urls:
-    time.sleep(1)
-
-    r = requests.get(url)
-    s = BeautifulSoup(r.content, 'html.parser')
+    s = requesthtml.request(url)
 
     racelist = s.find('div', class_='race_list').find_all('a', href=re.compile("/race/\\d+/"))
 
