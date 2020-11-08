@@ -1,10 +1,9 @@
-import requests
 from bs4 import BeautifulSoup
 import re
 import csv
 import time
 import argparse
-import config.actionmode
+import config
 from lib.utils import requesthtml
 
 def main():
@@ -22,13 +21,13 @@ def main():
 
     # 開催日分のURLを取得しておく
     for link_tag in urllist:
-      res = "https://db.netkeiba.com" + link_tag.get('href')
+      res = config.get('base_url') + link_tag.get('href')
       print(res)
       urls.append(res)
 
     prev_url = soup.select_one('img[src$="race_calendar_rev_02.gif"]').parent.get('href')
     print(prev_url)
-    req_url = "https://db.netkeiba.com" + prev_url
+    req_url = config.get('base_url') + prev_url
     print(req_url)
     i += 1
 
@@ -40,7 +39,7 @@ def main():
     racelist = s.find('div', class_='race_list').find_all('a', href=re.compile("/race/\\d+/"))
 
     for tag in racelist:
-      l = ["https://db.netkeiba.com" + tag.get('href')]
+      l = [config.get('base_url') + tag.get('href')]
       print(l)
       race_urls.append(l)
 
