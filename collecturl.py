@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import re
 import csv
-import time
 import argparse
 import config
 from lib.utils import requesthtml
