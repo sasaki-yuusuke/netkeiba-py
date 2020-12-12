@@ -53,9 +53,9 @@ def main():
     print(req_url)
     i += 1
 
-    race_urls = []
-
     for url in urls:
+      race_urls = []
+
       s = requesthtml.request(url)
       datestr = url.lstrip(config.get('base_url') + '/race/list/').rstrip('/')
 
