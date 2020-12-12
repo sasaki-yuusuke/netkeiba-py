@@ -29,9 +29,6 @@ def main():
     req_url += args.startym + '01'
   
   i = 0
-  req_date = stdate
-  # 初回のリクエストはデータベースのトップページ。
-  req_url = base_url
 
   # nヶ月分のレースカレンダーを走査
   while i < args.months:
@@ -70,7 +67,7 @@ def main():
         l = [config.get('base_url') + tag.get('href')]
         print(l)
         race_urls.append(l)
-        
+
       with open(path, 'w', encoding="utf-8") as f:
         writer = csv.writer(f)
         # print(race_urls)
