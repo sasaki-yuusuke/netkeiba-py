@@ -54,10 +54,15 @@ def main():
     i += 1
 
     for url in urls:
+      datestr = url.lstrip(config.get('base_url') + '/race/list/').rstrip('/')
+      path = 'data/urlcsv/' + datestr + '.csv'
+
+      if os.path.exists(path):
+        continue
+
       race_urls = []
 
       s = requesthtml.request(url)
-      datestr = url.lstrip(config.get('base_url') + '/race/list/').rstrip('/')
 
       racelist = s.find('div', class_='race_list').find_all('a', href=re.compile("/race/\\d+/"))
 
@@ -65,9 +70,7 @@ def main():
         l = [config.get('base_url') + tag.get('href')]
         print(l)
         race_urls.append(l)
-
-      path = 'data/urlcsv/' + datestr + '.csv'
-
+        
       with open(path, 'w', encoding="utf-8") as f:
         writer = csv.writer(f)
         # print(race_urls)
