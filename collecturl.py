@@ -3,17 +3,40 @@ import re
 import csv
 import argparse
 import config
+import os
+import datetime
+from dateutil.relativedelta import relativedelta
 from lib.utils import requesthtml
 
 def main():
+  argparser = argparse.ArgumentParser()
+
+  argparser.add_argument('--startym')
+  argparser.add_argument('--months', type=int)
+
+  args = argparser.parse_args()
+
   base_url = "https://db.netkeiba.com/?pid=race_top"
+
+  req_date = datetime.date.today()
+  req_url = base_url
+
+  if args.startym is not None:
+    y = int(args.startym[0:4])
+    m = int(args.startym[4:6])
+    stdate = datetime.date(y, m, 1)
+    req_date = stdate
+    req_url += args.startym + '01'
+  
   i = 0
-  urls = []
+  req_date = stdate
   # 初回のリクエストはデータベースのトップページ。
   req_url = base_url
 
   # nヶ月分のレースカレンダーを走査
-  while i < 3:
+  while i < args.months:
+    urls = []
+
     soup = requesthtml.request(req_url)
 
     urllist = soup.find('div', class_='race_calendar').find_all('a', href=re.compile("/race/list/\\d+/"))
@@ -30,22 +53,27 @@ def main():
     print(req_url)
     i += 1
 
-  race_urls = []
+    race_urls = []
 
-  for url in urls:
-    s = requesthtml.request(url)
+    for url in urls:
+      s = requesthtml.request(url)
+      datestr = url.lstrip(config.get('base_url') + '/race/list/').rstrip('/')
 
-    racelist = s.find('div', class_='race_list').find_all('a', href=re.compile("/race/\\d+/"))
+      racelist = s.find('div', class_='race_list').find_all('a', href=re.compile("/race/\\d+/"))
 
-    for tag in racelist:
-      l = [config.get('base_url') + tag.get('href')]
-      print(l)
-      race_urls.append(l)
+      for tag in racelist:
+        l = [config.get('base_url') + tag.get('href')]
+        print(l)
+        race_urls.append(l)
 
-  with open('urlcollection.csv', 'w', encoding="utf-8") as f:
-    writer = csv.writer(f)
-    # print(race_urls)
-    writer.writerows(race_urls)
+      path = 'data/urlcsv/' + datestr + '.csv'
+
+      with open(path, 'w', encoding="utf-8") as f:
+        writer = csv.writer(f)
+        # print(race_urls)
+        writer.writerows(race_urls)
+
+    req_date -= relativedelta(months=1)
 
 if __name__ == "__main__":
   main()
