@@ -1,5 +1,7 @@
-data/*/*.csv
-data/*/*/*.html
+.vscode
+
+data/html/*/*.html
+data/urlcsv/*.csv
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
