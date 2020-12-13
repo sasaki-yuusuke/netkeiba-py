@@ -5,6 +5,11 @@ from datetime import datetime
 
 class Raceinfo():
 
+  def is_exist(self, race_id, cursor):
+    cursor.execute("SELECT COUNT(race_id) FROM raceinfos WHERE race_id = %s", [race_id])
+    cnt_rcd = cursor.fetchone()
+    return cnt_rcd[0] > 0
+
   def execute(self, race_id, soup, cursor):
     year = race_id[0:4]
     course_id = race_id[4:6]
