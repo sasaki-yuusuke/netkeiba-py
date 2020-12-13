@@ -81,7 +81,7 @@ class Raceresult():
             goal_time = goal_time_min * 60 + goal_time_sec
           else:
             goal_time = Decimal(goal_time_array[0])
-          top_goal_time = goal_time if int(rank) == 1 else top_goal_time
+          top_goal_time = goal_time if rank is not None and int(rank) == 1 else top_goal_time
           goal_time_diff = goal_time - top_goal_time
 
         # 着差
