@@ -6,4 +6,8 @@ def request(url):
   time.sleep(1)
 
   res = requests.get(url)
-  return BeautifulSoup(res.content, 'html.parser')
+  # https://virtualsanpo.blogspot.com/2020/01/pythonbeautifulsoup.html
+  soup = BeautifulSoup(res.content.decode("euc-jp", "ignore"), 'html.parser')
+
+  # print(soup.original_encoding)
+  return soup

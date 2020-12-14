@@ -10,6 +10,7 @@ def main():
 
   for csv_path in csv_file_paths:
     directory_name = os.path.basename(csv_path).rstrip(".csv")
+    print('---' + directory_name)
 
     if os.path.exists('data/html/' + directory_name):
       continue
