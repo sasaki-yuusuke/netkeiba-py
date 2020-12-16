@@ -3,6 +3,7 @@ import re
 import os
 import glob
 import csv
+import requests
 from lib.utils import requesthtml
 
 def main():
@@ -16,13 +17,23 @@ def main():
       continue
     else:
       os.makedirs('data/html/' + directory_name)
+    
+    session = requests.Session()
+    login_data = {
+      'pid':'login',
+      'action':'auth',
+      'login_id':'LOGINUSER',
+      'pswd':'PASSWORD'
+    }
+
+    session.post('https://regist.netkeiba.com/account/', data=login_data)
 
     with open(csv_path, 'r', encoding="utf-8") as f:
       reader = csv.reader(f)
 
       for row in reader:
         race_url = row[0]
-        soup = requesthtml.request(race_url)
+        soup = requesthtml.request_with_login(race_url, session)
         race_path = re.search("/race/\\d+/", race_url).group()
 
         race_id = re.search(r'\d+', race_path).group()
