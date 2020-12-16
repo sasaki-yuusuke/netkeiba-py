@@ -88,7 +88,8 @@ class Raceresult():
         goal_diff = tds[8].get_text().strip()
         
         # タイム指数(P)
-        # print(tds[9].get_text())
+        speed_index_txt = tds[9].get_text().strip()
+        speed_index = int(speed_index_txt) if len(speed_index_txt) > 0 else None
 
         # 通過順位
         rank_pass = tds[10].get_text().strip()
@@ -120,6 +121,7 @@ class Raceresult():
 
         # 備考(P)
         # print(tds[17].get_text())
+        remarks = tds[17].get_text().strip()
 
         # 調教師
         trainer_link = tds[18].find('a').get('href')
@@ -145,8 +147,8 @@ class Raceresult():
         raceresult_param = [ race_id, horse_num, frame_num, horse_id, horse_name, rank,
                               is_pulled_up, is_disqualified, is_scratched, is_demoted, is_retrained,
                               sex, age, jockey_id, jockey_name, jockey_weight, goal_time, goal_diff, goal_time_diff,
-                              finish_3f, rank_pass, odds, horse_weight,
+                              speed_index, finish_3f, rank_pass, remarks, odds, horse_weight,
                               trainer_id, trainer, owner_id, owner ]
         print(raceresult_param)
-        cursor.execute("INSERT INTO raceresults VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", raceresult_param)
+        cursor.execute("INSERT INTO raceresults VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", raceresult_param)
         
