@@ -26,7 +26,7 @@ def main():
     m = int(args.startym[4:6])
     stdate = datetime.date(y, m, 1)
     req_date = stdate
-    req_url += args.startym + '01'
+    req_url += '&date=' + args.startym + '01'
   
   i = 0
 
@@ -34,6 +34,7 @@ def main():
   while i < args.months:
     urls = []
 
+    print(req_url)
     soup = requesthtml.request(req_url)
 
     urllist = soup.find('div', class_='race_calendar').find_all('a', href=re.compile("/race/list/\\d+/"))
