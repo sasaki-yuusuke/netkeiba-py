@@ -127,7 +127,7 @@ class Raceresult():
         trainer_link = tds[18].find('a').get('href')
         # /trainer/¥¥d/
         trainer_id = trainer_link.split('/')[2]
-        trainer = tds[18].get_text().strip()
+        trainer = tds[18].get_text().strip().replace('\n         ', '')
         # print(tds[18].get_text())
 
         # 馬主
