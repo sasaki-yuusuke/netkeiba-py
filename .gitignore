@@ -1,6 +1,7 @@
 .vscode
 
-data/html/*/*.html
+data/horsehtml/*.html
+data/racehtml/*/*.html
 data/urlcsv/*.csv
 
 ### Python ###
