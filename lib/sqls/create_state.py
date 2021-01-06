@@ -71,3 +71,35 @@ CREATE_RACERESULTS_TABLE = '''
     PRIMARY KEY(race_id, horse_num)
   )
   '''
+
+CREATE_HORSES_TABLE = '''
+  CREATE TABLE IF NOT EXISTS horses(
+    horse_id char(10),
+    horse_name varchar(20),
+    is_from_race numeric(1,0),
+    birthday date,
+    breeding_area varchar(20),
+    sire_id char(10),
+    sire_name varchar(20),
+    dam_id char(10),
+    dam_name varchar(20),
+    broodmaresire_id char(10),
+    broodmaresire_name varchar(20),
+    coat_color varchar(5),
+    trainer_id char(5),
+    trainer varchar(30),
+    trainer_area varchar(5),
+    owner_id char(6),
+    owner varchar(30),
+    breeder_id char(6),
+    breeder varchar(30),
+    trade_price numeric(6,0),
+    traded_auction varchar(20),
+    earning_jra numeric(6,0),
+    earning_nar numeric(6,0),
+    total_races numeric(2,0),
+    total_wins numeric(2,0),
+    total_results varchar(12),
+    PRIMARY KEY(horse_id)
+  )
+  '''

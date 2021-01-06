@@ -26,6 +26,7 @@ class InitDb():
     self.create_raceinfos_table(cur)
     self.create_racelaps_table(cur)
     self.create_raceresults_table(cur)
+    self.create_horses_table(cur)
     cur.close()
     conn.commit()
   
@@ -37,3 +38,6 @@ class InitDb():
   
   def create_raceresults_table(self, cur):
     cur.execute(create_state.CREATE_RACERESULTS_TABLE)
+
+  def create_horses_table(self, cur):
+    cur.execute(create_state.CREATE_HORSES_TABLE)
