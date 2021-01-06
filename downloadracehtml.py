@@ -13,10 +13,10 @@ def main():
     directory_name = os.path.basename(csv_path).rstrip(".csv")
     print('---' + directory_name)
 
-    if os.path.exists('data/html/' + directory_name):
+    if os.path.exists('data/racehtml/' + directory_name):
       continue
     else:
-      os.makedirs('data/html/' + directory_name)
+      os.makedirs('data/racehtml/' + directory_name)
     
     session = requests.Session()
     login_data = {
@@ -39,7 +39,7 @@ def main():
         race_id = re.search(r'\d+', race_path).group()
         print(race_id)
 
-        with open('data/html/' + directory_name + '/' + race_id + '.html', mode = 'w', encoding = 'utf-8') as htmlf:
+        with open('data/racehtml/' + directory_name + '/' + race_id + '.html', mode = 'w', encoding = 'utf-8') as htmlf:
           htmlf.write(soup.prettify())
 
 
