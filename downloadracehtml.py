@@ -4,7 +4,7 @@ import os
 import glob
 import csv
 import requests
-from lib.utils import requesthtml
+from lib.utils import requesthtml, netkeiba_login
 
 def main():
   csv_file_paths = glob.glob("./data/urlcsv/*.csv")
@@ -18,15 +18,8 @@ def main():
     else:
       os.makedirs('data/racehtml/' + directory_name)
     
-    session = requests.Session()
-    login_data = {
-      'pid':'login',
-      'action':'auth',
-      'login_id':'LOGINUSER',
-      'pswd':'PASSWORD'
-    }
-
-    session.post('https://regist.netkeiba.com/account/', data=login_data)
+    # netkeibaへのログイン処理
+    session = netkeiba_login.login_session()
 
     with open(csv_path, 'r', encoding="utf-8") as f:
       reader = csv.reader(f)

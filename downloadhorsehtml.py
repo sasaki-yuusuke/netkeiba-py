@@ -5,7 +5,7 @@ import argparse
 import requests
 import psycopg2
 from lib.app import horse
-from lib.utils import requesthtml
+from lib.utils import requesthtml, netkeiba_login
 
 argparser = argparse.ArgumentParser()
 
@@ -73,16 +73,8 @@ for filename in html_files:
     if not os.path.exists('data/horsehtml'):
       os.makedirs('data/horsehtml')
     
-    # TODO: ログインは共通処理とする
-    session = requests.Session()
-    login_data = {
-      'pid':'login',
-      'action':'auth',
-      'login_id':'LOGINUSER',
-      'pswd':'PASSWORD'
-    }
-
-    session.post('https://regist.netkeiba.com/account/', data=login_data)
+    # netkeibaへのログイン処理
+    session = netkeiba_login.login_session()
 
     horse_url = "https://db.netkeiba.com/horse/" + horse_id
     print(horse_url)
