@@ -72,6 +72,14 @@ CREATE_RACERESULTS_TABLE = '''
   )
   '''
 
+CREATE_COURSES_TABLE = '''
+  CREATE TABLE IF NOT EXISTS courses(
+    course_id char(2),
+    course varchar(10),
+    PRIMARY KEY(course_id)
+  );
+  '''
+
 CREATE_HORSES_TABLE = '''
   CREATE TABLE IF NOT EXISTS horses(
     horse_id char(10),

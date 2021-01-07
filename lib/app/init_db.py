@@ -26,7 +26,10 @@ class InitDb():
     self.create_raceinfos_table(cur)
     self.create_racelaps_table(cur)
     self.create_raceresults_table(cur)
+    self.create_courses_table(cur)
     self.create_horses_table(cur)
+
+    self.copy_courses_initdata(cur)
     cur.close()
     conn.commit()
   
@@ -39,5 +42,32 @@ class InitDb():
   def create_raceresults_table(self, cur):
     cur.execute(create_state.CREATE_RACERESULTS_TABLE)
 
+  def create_courses_table(self, cur):
+    cur.execute(create_state.CREATE_COURSES_TABLE)
+
   def create_horses_table(self, cur):
     cur.execute(create_state.CREATE_HORSES_TABLE)
+
+
+  def copy_courses_initdata(self, cur):
+    """
+    coursesテーブルの初期データ投入（COPYコマンドを利用してCSVからデータ投入）
+
+    Parameters
+    ----------
+    cur : psycopg2.cursor
+      psycopg2のカーソルオブジェクト
+    """
+
+    cur.execute("SELECT COUNT(course_id) FROM courses")
+    cnt_rcd = cur.fetchone()
+    return cnt_rcd[0] > 0
+
+    path = './db/seeds/courses.csv'
+    copy_sql = '''
+      COPY courses FROM stdin WITH CSV HEADER
+           DELIMITER as ','
+      '''
+
+    with open(path, 'r') as f:
+      cur.copy_expert(sql=copy_sql, file=f)
