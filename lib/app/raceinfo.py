@@ -117,4 +117,4 @@ class Raceinfo():
                       is_turf, is_dart, is_jump, distance, course, race_class, race_cond, weather, ground_cond, 
                       start_3f, finish_3f, race_date, is_juvenile, is_only3yearold, grade, is_openclass]
     print(raceinfo_param)
-    cursor.execute("INSERT INTO raceinfos VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", raceinfo_param)
+    cursor.execute("INSERT INTO raceinfos VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,now(),now())", raceinfo_param)

@@ -152,5 +152,5 @@ class Raceresult():
                             speed_index, finish_3f, rank_pass, remarks, odds, horse_weight,
                             trainer_id, trainer, owner_id, owner ]
       print(raceresult_param)
-      cursor.execute("INSERT INTO raceresults VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", raceresult_param)
+      cursor.execute("INSERT INTO raceresults VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,now(),now())", raceresult_param)
       

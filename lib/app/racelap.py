@@ -25,5 +25,5 @@ class Racelap():
       for lap in lap_list:
         lap_distance = 200 if lap_start_point % 200 == 0 else lap_start_point % 200
         racelap_param = [ race_id, lap_start_point, lap, lap_distance ]
-        cursor.execute("INSERT INTO racelaps VALUES (%s,%s,%s,%s)", racelap_param)
+        cursor.execute("INSERT INTO racelaps VALUES (%s,%s,%s,%s,now(),now())", racelap_param)
         lap_start_point -= lap_distance
