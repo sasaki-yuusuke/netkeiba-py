@@ -58,6 +58,48 @@ class Raceinfo():
     race_cond_list = race_cond_txt.split(u'\xa0')
     race_class = race_cond_list[0]
     print(race_class)
+
+    is_juvenile = is_only3yearold = 0
+    if race_class.startswith('2歳'):
+      is_juvenile = 1
+    if race_class.startswith('3歳') and '3歳以上' not in race_class:
+      is_only3yearold = 1
+
+    is_openclass = 0
+    if race_class.endswith('オープン'):
+      is_openclass = 1
+      if race_name.endswith('L'):
+        grade = 11
+      elif race_name.endswith('G'):
+        grade = 12
+      elif race_name.endswith('G3)'):
+        grade = 13
+      elif race_name.endswith('G2)'):
+        grade = 14
+      elif race_name.endswith('G1)'):
+        grade = 15
+      else:
+        grade = 10
+    else:
+      if race_class.endswith('新馬'):
+        grade = 0
+      elif race_class.endswith('3勝クラス'):
+        grade = 7
+      elif race_class.endswith('1600万下'):
+        grade = 6
+      elif race_class.endswith('2勝クラス'):
+        grade = 5
+      elif race_class.endswith('1000万下'):
+        grade = 4
+      elif race_class.endswith('1勝クラス'):
+        grade = 3
+      elif race_class.endswith('500万下'):
+        grade = 2
+      elif race_class.endswith('未勝利'):
+        grade = 1
+      else:
+        raise ValueError('レース格の例外: ' + race_class)
+
     race_cond = race_cond_list[2]
 
     lap_table = soup.find('table', class_='result_table_02', summary='ラップタイム')
@@ -73,6 +115,6 @@ class Raceinfo():
 
     raceinfo_param = [ race_id, year, course_id, course_round, course_roundday, race_num, race_name,
                       is_turf, is_dart, is_jump, distance, course, race_class, race_cond, weather, ground_cond, 
-                      start_3f, finish_3f, race_date ]
+                      start_3f, finish_3f, race_date, is_juvenile, is_only3yearold, grade, is_openclass]
     print(raceinfo_param)
-    cursor.execute("INSERT INTO raceinfos VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", raceinfo_param)
+    cursor.execute("INSERT INTO raceinfos VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", raceinfo_param)

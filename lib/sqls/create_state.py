@@ -23,6 +23,10 @@ CREATE_RACEINFOS_TABLE = '''
     start_3f numeric(4,1),
     finish_3f numeric(4,1),
     race_datetime timestamp,
+    is_juvenile numeric(1,0),
+    is_only3yearold numeric(1,0),
+    grade numeric(2,0),
+    is_openclass numeric(1,0),
     PRIMARY KEY(race_id)
   );
   '''
